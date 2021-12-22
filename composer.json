@@ -1,0 +1,22 @@
+{
+  "name": "amottier/testauth",
+  "authors": [
+    {
+      "name": "Aurélien MOTTIER",
+      "email": "amottier@iil.ch"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Auth\\": "src/"
+    }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^6.0",
+    "symfony/error-handler": "^6.0",
+    "symfony/debug-bundle": "^6.0"
+  },
+  "require": {
+    "symfony/dotenv": "^6.0"
+  }
+}
