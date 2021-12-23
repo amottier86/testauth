@@ -1,6 +1,7 @@
 <?php
 
-use Auth\Authentication;
+use Auth\Controller\Authentication;
+use Auth\Entity\User;
 
 require(__DIR__ . "/header.php"); 
 
@@ -24,9 +25,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($user = $auth->isValidUser($username, $password)) {
             if($auth->createSession($user)) {
                 header("Location: index.php");
+            } else {
+                $error = "Problème de création de la session !";
             }
         } else {
-            $error = "Utilisateur inconnu !";
+            $error = "invalid credentials !";
         }
     }
 }

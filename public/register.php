@@ -1,35 +1,49 @@
 <?php
 
-use Auth\Authentication;
-use Auth\User;
+use Auth\Controller\Authentication;
+use Auth\Entity\User;
 
 require(__DIR__ . "/header.php"); 
 
 $username = null;
 $password = null;
+$email = null;
 $error = null;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = filter_input_array(INPUT_POST, [
         "username" => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-        "password" => FILTER_DEFAULT
+        "password" => FILTER_DEFAULT,
+        "email" => FILTER_SANITIZE_EMAIL
     ]);
 
     $username = $input['username'];
     $password = $input['password'];
+    $email = $input['email'];
+    $id = time();
 
-    $auth = new Authentication();
-    $user = new User(time(), $username, $password);
-    if(!$auth->isUserAlreadyExist($username)) {
-        $auth->createUser($user);
-        header('Location: login.php');
+    if(!$username || !$password || !$email) {
+        $error = "Veuillez tout compléter";
     } else {
-        $error = "L'utilisateur existe déjà !";
+        $user = new User($id, $username, $password, $email);
+        $auth = new Authentication();
+        if($auth->isUserExist($user)) {
+            $error = "Utilisateur déjà existant !";
+        } else {
+            if($auth->createUser($user)) {
+                if(!$auth->createSession($user)) {
+                    $error = "Problème de création de la session !";
+                } else {
+                    header("Location: index.php");
+                }
+            } else {
+                $error = "Problème de création du user !";
+            }
+        }
     }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +63,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <label for="password">Password :</label>
             <input type="password" name="password" value="<?= $password; ?>">
+        </div>
+        <div>
+            <label for="password">E-mail :</label>
+            <input type="email" name="email" value="<?= $email; ?>">
         </div>
         <?php if($error): ?>
             <span style="color:red;">

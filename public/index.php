@@ -1,8 +1,21 @@
 <?php
 
+use Auth\Controller\Authentication;
+
 require(__DIR__ . "/header.php"); 
+
 $username = null;
 $password = null;
+
+$auth = new Authentication();
+if(!$auth->isLoggedIn()) {
+    $auth->logout();
+}
+
+$auth->initUser();
+
+$username = $_SESSION['username'];
+
 
 ?>
 <!DOCTYPE html>
@@ -14,8 +27,7 @@ $password = null;
     <title>Home page</title>
 </head>
 <body>
-    <h1>Bienvenue dans votre espace <?= $username ?> !</h1>
-    <p>Votre mot de passe crypté est : <?= $password ?></p>
+    <h1>Bienvenue dans votre espace <span style="color: blue;"><?= $username ?></span> !</h1>
     <a href="logout.php">Déconnexion</a>
 </body>
 </html>

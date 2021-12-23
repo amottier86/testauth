@@ -10,4 +10,3 @@ $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . "/../.env");
 
 Debug::enable();
-
