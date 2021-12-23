@@ -25,20 +25,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!$username || !$password || !$email) {
         $error = "Veuillez tout compléter";
     } else {
-        $user = new User($id, $username, $password, $email);
+        $user = new User($id, $username, $password, $email, false);
         $auth = new Authentication();
-        if($auth->isUserExist($user)) {
-            $error = "Utilisateur déjà existant !";
-        } else {
-            if($auth->createUser($user)) {
-                if(!$auth->createSession($user)) {
-                    $error = "Problème de création de la session !";
-                } else {
-                    header("Location: index.php");
-                }
-            } else {
-                $error = "Problème de création du user !";
-            }
+        if(!$auth->signOut($user)) {
+            $error = "Registration failed !";
         }
     }
 }

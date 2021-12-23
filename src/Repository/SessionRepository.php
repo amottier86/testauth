@@ -31,7 +31,6 @@ class SessionRepository
                 if($user) {
                     $createdAt = DateTime::createFromFormat("Y-m-d H:i:s.u", $session['created_at']);
                     return new Session($session['id'], $user, $createdAt);
-                    
                 }
             }
             return null;
@@ -45,12 +44,13 @@ class SessionRepository
         try {
             $liste = [];
             $userId = $user->id;
-            $statment = $this->pdo->prepare("SELECT * FROM sessions WHERE user_id = :userid");
+            $statment = $this->pdo->prepare("SELECT * FROM sessions WHERE user_id = :userid ORDER BY created_at DESC");
             $statment->bindValue("userid", $userId);
             $statment->execute();
             if($results = $statment->fetchAll(PDO::FETCH_ASSOC)) {
                 foreach($results as $session) {
-                    $liste[] = new Session($session['id'], $session['user_id'], $session['created_at']);
+                    $createdAt = DateTime::createFromFormat("Y-m-d H:i:s.u", $session['created_at']);
+                    $liste[] = new Session($session['id'], $user, $createdAt);
                 }
             }
             return $liste;

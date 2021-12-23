@@ -17,6 +17,7 @@
     "symfony/debug-bundle": "^6.0"
   },
   "require": {
-    "symfony/dotenv": "^6.0"
+    "symfony/dotenv": "^6.0",
+    "symfony/mailer": "^6.0"
   }
 }

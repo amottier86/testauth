@@ -22,7 +22,13 @@ class UserRepository
             $statment->bindValue("id", $id);
             $statment->execute();
             if($user = $statment->fetch(PDO::FETCH_ASSOC)) {
-                return new User($user['id'], $user['username'], $user['password'], $user['email']);
+                return new User(
+                    $user['id'], 
+                    $user['username'], 
+                    $user['password'], 
+                    $user['email'],
+                    $user['choose_2fa']
+                );
             }
             return null;
         } catch (Throwable $th) {
@@ -37,7 +43,13 @@ class UserRepository
             $statment->bindValue("email", $email);
             $statment->execute();
             if($user = $statment->fetch(PDO::FETCH_ASSOC)) {
-                return new User($user['id'], $user['username'], $user['password'], $user['email']);
+                return new User(
+                    $user['id'], 
+                    $user['username'], 
+                    $user['password'], 
+                    $user['email'],
+                    $user['choose_2fa']
+                );
             }
             return null;
         } catch (Throwable $th) {
@@ -52,7 +64,13 @@ class UserRepository
             $statment->bindValue("username", $username);
             $statment->execute();
             if($user = $statment->fetch(PDO::FETCH_ASSOC)) {
-                return new User($user['id'], $user['username'], $user['password'], $user['email']);
+                return new User(
+                    $user['id'], 
+                    $user['username'], 
+                    $user['password'], 
+                    $user['email'],
+                    $user['choose_2fa']
+                );
             }
             return null;
         } catch (Throwable $th) {

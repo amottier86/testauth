@@ -1,8 +1,8 @@
 <?php
 
-use Auth\Controller\Authentication;
-
 require(__DIR__ . "/header.php"); 
+
+use Auth\Controller\Authentication;
 
 $username = null;
 $password = null;
@@ -16,6 +16,8 @@ $auth->initUser();
 
 $username = $_SESSION['username'];
 
+$openSessions = $auth->getSessionsOfUserId($_SESSION['userid']);
+
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +29,17 @@ $username = $_SESSION['username'];
     <title>Home page</title>
 </head>
 <body>
+    <?php require(__DIR__ . "/navbar.php"); ?>
     <h1>Bienvenue dans votre espace <span style="color: blue;"><?= $username ?></span> !</h1>
+    <p>Mes sessions ouvertes :</p>
+    <ul>
+        <?php foreach($openSessions as $session): ?>
+            <li>
+                Connecté le <?= $session->createdAt->format("d/m/Y H:i"); ?>
+                <a href="removeSession.php?id=<?= $session->id; ?>">Supprimer</a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
     <a href="logout.php">Déconnexion</a>
 </body>
 </html>

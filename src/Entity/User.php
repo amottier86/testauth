@@ -8,12 +8,14 @@ class User
     private string $username;
     private string $password;
     private string $email;
+    private bool $choose2fa;
 
-    public function __construct(int $id, string $username, string $password, string $email) {
+    public function __construct(int $id, string $username, string $password, string $email, $choose2fa) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
+        $this->choose2fa = $choose2fa;
     }
 
     public function __get($name)
@@ -28,6 +30,6 @@ class User
 
     public function __toString(): string
     {
-        return  "user : {$this->id} {$this->username} {$this->password} {$this->email}" . PHP_EOL;
+        return  "user : {$this->id} {$this->username} {$this->password} {$this->email} {$this->choose2fa}" . PHP_EOL;
     }
 }
