@@ -232,7 +232,7 @@ class Authentication
         $transport = Transport::fromDsn($_ENV['MAILER_DSN']);
         $mailer = new Mailer($transport);
 
-        $emailApp = "app@example.com";
+        $emailApp = "no-reply@iil.ch";
 
         $email = new Email();
         $email
