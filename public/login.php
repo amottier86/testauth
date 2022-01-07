@@ -57,6 +57,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <button type="submit">Connexion</button>
         </div>
+        <div id="root"></div>
     </form>
 </body>
 </html>
